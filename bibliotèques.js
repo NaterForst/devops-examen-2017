@@ -33,6 +33,18 @@ app.get('/books/delete/', function(req, res) {
 	app.db.collection('book').remove({_id: new mongodb.ObjectId(req.params.id)})
 	res.redirect('/books')
 });
+// Fonction emprunt livre
+app.post('/books/+book._id+/emprunt', function(req, res) {
+      app.db.collection('book').update({_id: new mongodb.ObjectId(req.params.id)}, { $set: {emprunt: {date_emprunt: new Date(), emprunteur: req.body.emprunteur}}})
+    res.redirect('/books/'+req.params.id)
+});
+
+// Fonction retour livre
+app.post('/books/+book._id+/rendre', function(req, res) {
+    if (req.body.return){
+        app.db.collection('book').update({_id: new mongodb.ObjectId(req.params.id)}, { $unset: {emprunt: ''}})
+    }
+    res.redirect('/books/'+req.params.id)
 
 MongoClient.connect('mongodb://localhost:27017/Bibliotheque', function(err, db) {
   app.Bibliotheque = Bibliotheque;
