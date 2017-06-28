@@ -3,17 +3,34 @@ html(lang="en")
   head
 title Liste des livres
 body
-    h1 Caract�ristiques du livre
+    h1 Caractéristiques du livre
 	each book in books
 	 p ISBN : #{book.ISBN}
         p titre : #{book.titre}
         p auteur : #{book.auteur}
         p date d'achat : #{book.dateachat}
         p etat : #{book.etat}
-		p thematique : #{book.thematique}
+	p thematique : #{book.thematique}
+	if book.emprunt
+            p Prêt en cours :
+                p Emprunteur : #{book.emprunt.emprunteur}
+                p Date d'emprunt : #{book.emprunt.date_emprunt}
+
+            form(action='/books/'+book._id+'/rendre', method='POST')
+                p Rendre le livre 
+                    input(type='checkbox', name='rendre')
+                input(type='submit', value='Rendre')
+        else
+            p Pas de prêt en cours
+
+            form(action='/books/'+book._id+'/emprunt', method='POST')
+                h1 Nom de l'emprunteur: 
+                    input(type='text', name='emprunteur')
+                input(type='submit', value='Emprunter')
+
 //formulaire de suppression d'un livre
 
-    h1 Supprimer un livre de la biblioth�que:
+    h1 Supprimer un livre de la bibliothèque:
 
     form(action='/books/delete', method='POST')
         h1 ISBN : 
