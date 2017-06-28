@@ -35,7 +35,7 @@ app.get('/books/delete/', function(req, res) {
 });
 
 MongoClient.connect('mongodb://localhost:27017/Bibliotheque', function(err, db) {
-  app.Bibliotheque = Blibliotheque;
+  app.Bibliotheque = Bibliotheque;
   app.listen(8000);
   console.log("Express server started on 8000");
 });
